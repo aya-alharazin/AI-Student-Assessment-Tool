@@ -84,7 +84,7 @@ app.post("/api/evaluate", async (req, res) => {
     const code = await readJavaFiles(javaFiles, process.env.GITHUB_TOKEN);
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const maxScore = 20;
+    const maxScore = 5;
 
     const prompt = `
 You are an expert advanced Java instructor.
@@ -107,7 +107,7 @@ Return ONLY valid JSON in this exact format:
 {
   "score": number,
   "strengths": ["string", "string", "string"],
-  "improvements": ["string", "string", "string"]
+  "Weakness": ["string", "string", "string"]
 }
 
 RULES:
