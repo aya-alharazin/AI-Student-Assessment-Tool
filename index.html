@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Assess Java Repo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    input, textarea { width: 100%; padding: 0.5rem; margin-top: 0.25rem; }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; }
+    pre { background: #f4f4f5; padding: 1rem; margin-top: 1rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Assess Java GitHub Repo</h1>
+
+  <label>
+    GitHub repository URL
+    <input id="repoUrl" type="url" placeholder="https://github.com/owner/repo" />
+  </label>
+
+  <label>
+    Assignment description
+    <textarea id="assignmentDescription" rows="4" placeholder="Describe the assignment here"></textarea>
+  </label>
+
+  <button id="submitBtn">Analyze</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    const btn = document.getElementById("submitBtn");
+    const output = document.getElementById("output");
+
+    btn.addEventListener("click", async () => {
+      const repoUrl = document.getElementById("repoUrl").value.trim();
+      const assignmentDescription = document.getElementById("assignmentDescription").value.trim();
+      output.textContent = "Loading...";
+
+      try {
+        const res = await fetch("http://localhost:3000/api/evaluate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ repoUrl, assignmentDescription })
+        });
+
+        const data = await res.json();
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        console.error(err);
+        output.textContent = "Request failed: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
