@@ -24,7 +24,6 @@ A full-stack tool that automatically evaluates Java assignments from GitHub repo
 project-root/
 ├── index.html      # Frontend UI (form + results display)
 ├── server.js       # Backend (Express + GitHub API + Gemini AI)
-├── .env            # Environment variables (not committed)
 └── package.json    # Dependencies
 ```
 
